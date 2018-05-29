@@ -7,22 +7,20 @@ RG=bullclip-machine-learning
 STORAGE_ACCOUNT=bullclipml
 ACI_PERS_LOCATION=eastus
 ACI_PERS_SHARE_NAME=fileshare
+ACI_NAME=converter
 
 
 # Export the connection string as an environment variable. The following 'az storage share create' command
 # references this environment variable when creating the Azure file share.
 export AZURE_STORAGE_CONNECTION_STRING=`az storage account show-connection-string --resource-group $RG --name $STORAGE_ACCOUNT --output tsv`
 
-# Create the file share
-az storage share create -n $ACI_PERS_SHARE_NAME
-
 STORAGE_KEY=$(az storage account keys list --resource-group $RG --account-name $STORAGE_ACCOUNT --query "[0].value" --output tsv)
-echo $STORAGE_KEY
+# echo $STORAGE_KEY
 
 az container create \
     --resource-group $RG \
     --location southeastasia \
-    --name hellofiles \
+    --name $ACI_NAME \
     --image flanagan89/pdfconverter:v1 \
     --dns-name-label bullclip-pdfconverter-v1 \
     --ports 80 3000 \
