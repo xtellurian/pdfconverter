@@ -6,7 +6,7 @@ set -e
 RG=bullclip-machine-learning
 STORAGE_ACCOUNT=bullclipml
 ACI_PERS_LOCATION=eastus
-ACI_PERS_SHARE_NAME=acishare
+ACI_PERS_SHARE_NAME=fileshare
 
 
 # Export the connection string as an environment variable. The following 'az storage share create' command
@@ -23,8 +23,8 @@ az container create \
     --resource-group $RG \
     --location southeastasia \
     --name hellofiles \
-    --image microsoft/aci-hellofiles \
-    --dns-name-label bullclip-pdfconverter \
+    --image flanagan89/pdfconverter:v1 \
+    --dns-name-label bullclip-pdfconverter-v1 \
     --ports 80 3000 \
     --azure-file-volume-account-name $STORAGE_ACCOUNT \
     --azure-file-volume-account-key $STORAGE_KEY \
