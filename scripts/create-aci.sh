@@ -36,7 +36,7 @@ az container create \
     --resource-group $RG \
     --location $ACI_LOCATION \
     --name $ACI_NAME \
-    --image flanagan89/pdfconverter:v1 \
+    --image flanagan89/pdfconverter:v2 \
     --dns-name-label bullclip-pdfconverter-v1 \
     --ports 80 3000 \
     --azure-file-volume-account-name $STORAGE_ACCOUNT_NAME \
