@@ -1,12 +1,10 @@
 var PDFImage = require("pdf-image").PDFImage;
-var express = require('express')
-var app = express()
+var express = require('express');
+var helmet = require('helmet');
 
-// var pdfImage = new PDFImage("/tmp/AECOM-00001.pdf");
-// pdfImage.convertPage(0).then(function (imagePath) {
-//   // 0-th page (first page) of the slide.pdf is available as slide-0.png
-//   fs.existsSync("/tmp/slide-0.png") // => true
-// });
+// use helmet for security
+var app = express();
+app.use(helmet());
 
 app.get(/(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
     var pdfPath = req.params[0];
@@ -21,4 +19,6 @@ app.get(/(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
     });
   });
  
-app.listen(3000)
+app.listen(3000);
+
+console.log("App is listening on port 3000");

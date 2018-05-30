@@ -10,15 +10,10 @@ RUN apt-get install --yes curl
 RUN curl --silent --location https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install --yes nodejs
 
-RUN npm install pdf-image
-
-RUN npm install express
-
-
-WORKDIR /work
-
+# copy everything into workdir
 COPY . .
 
-RUN ["chmod", "+x", "./entry.sh"]
+# install dependencies from package.json
+RUN npm install
 
-ENTRYPOINT [ "./entry.sh"]
+ENTRYPOINT [ "node", "./app.js"]
