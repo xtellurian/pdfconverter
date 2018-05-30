@@ -4,6 +4,14 @@ Pdf Converter is a container to convert PDF to PNG.
 
 It will serve PNG images of PDF files on the file system. Using ACI enables mounting of Azure Storage File Share into the container, meaning we can directly convert from a PDF in Azure Storage to PNG.
 
+## Usage
+
+Your PNG will be served at `<your-ip-or-url>:5000/data-dir/path-to-file-in-fileshare/<page-number>.png?secret=1234&width=XXX&height=YYYY`
+
+The height and width query params are optional.
+
+The secret is not optional. It defaults to 1234, but will be set as a random string if you use the `./scripts/create-aci.sh` script.
+
 ## Build the docker image
 
 You must have docker installed to build the image locally.
@@ -19,7 +27,7 @@ Run the container locally:
 
 You'll see a static image served at:
 
-`http://localhost:3000/static-files/test.pdf/0.png`
+`http://localhost:3000/static-files/test.pdf/0.png?secret=1234`
 
 ## Deploy to Azure Container Instance
 

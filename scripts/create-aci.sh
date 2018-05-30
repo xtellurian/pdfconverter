@@ -28,6 +28,9 @@ echo "File Share Name: $SHARE_NAME"
 echo "ACI Location: $ACI_LOCATION"
 echo "ACI Name: $ACI_NAME"
 
+# generate a random secret to access the data when deployed
+SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
 # Export the connection string as an environment variable. The following 'az storage share create' command
 # references this environment variable when creating the Azure file share.
 export AZURE_STORAGE_CONNECTION_STRING=`az storage account show-connection-string --resource-group $RG --name $STORAGE_ACCOUNT_NAME --output tsv`
@@ -44,4 +47,7 @@ az container create \
     --azure-file-volume-account-name $STORAGE_ACCOUNT_NAME \
     --azure-file-volume-account-key $STORAGE_KEY \
     --azure-file-volume-share-name $SHARE_NAME \
-    --azure-file-volume-mount-path /data-dir/
+    --azure-file-volume-mount-path /data-dir/ \
+    --environment-variables SECRET=$SECRET
+
+echo "Data secret is $SECRET"
