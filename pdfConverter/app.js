@@ -1,10 +1,11 @@
 // configure dotenv file.
 require('dotenv').config()
 
-var express = require('express');
-var helmet = require('helmet');
-var blob = require('./azureBlobs');
-var pdf = require('./pdfToImage');
+const fs = require('fs');
+const express = require('express');
+const helmet = require('helmet');
+const blob = require('./azureBlobs');
+const pdf = require('./pdfToImage');
 
 // use helmet for security
 var app = express();
@@ -19,10 +20,13 @@ app.get(/(blob\/)(.*?\/)(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
   var pageNumber = req.params[3];
   console.log(`Downloading ${pdfPath} from blob container ${container}`);
 
+  // serve then delete
   blob.download(pdfPath, container)
-    .then((info)=> pdf.servePdfAsPng(info.path, pageNumber, req, res))
-    .catch((e) => res.send(e, 500));
-
+    .then((info) => pdf.servePdfAsPng(info.path, pageNumber, req, res)
+      .then((path) => setTimeout(() => fs.unlink(path,
+        () => console.log(`Deleted ${path}`)), 5000, path)) // delete file 5 secnds after its served
+      .catch(console.log))
+    .catch((err) => res.send(err, 500));
 })
 
 app.get(/(volume)(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
@@ -32,7 +36,10 @@ app.get(/(volume)(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
     var pdfPath = req.params[1];
     var pageNumber = req.params[2];
 
-    pdf.servePdfAsPng(pdfPath, pageNumber, req, res);
+    pdf.servePdfAsPng(pdfPath, pageNumber, req, res)
+      .then((path) => setTimeout(() => fs.unlink(path,
+        () => console.log(`Deleted ${path}`)), 5000, path)) // delete file 5 secnds after its served
+      .catch((err) => res.send(err, 500));
   } else {
     res.send(401);
   }
@@ -41,4 +48,3 @@ app.get(/(volume)(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
 app.listen(3000);
 
 console.log("App is listening on port 3000");
-
