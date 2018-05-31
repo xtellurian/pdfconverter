@@ -14,6 +14,7 @@
   "author": "Rian Finnegan",
   "license": "MIT",
   "dependencies": {
+    "azure-storage": "^2.9.0-preview",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "helmet": "^3.12.1",
