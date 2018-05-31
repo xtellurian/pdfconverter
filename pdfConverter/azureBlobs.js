@@ -3,11 +3,9 @@ const path = require('path');
 const fs = require('fs');
 
 const blobService = storage.createBlobService();
-const containerName = 'raw';
 const sourceFilePath = path.resolve('./downloads/{NAME}');
 
-const list = () => {
-    console.log('calling list');
+const list = (containerName) => {
     return new Promise((resolve, reject) => {
         blobService.listBlobsSegmented(containerName, null, (err, data) => {
             if(err) {
@@ -19,11 +17,9 @@ const list = () => {
     });
 };
 
-const download = (blobPath) => {
+const download = (blobPath, containerName) => {
     const downloadFilePath = sourceFilePath.replace('{NAME}', blobPath);
     return new Promise((resolve, reject) => {
-        console.log(blobPath);
-        console.log(downloadFilePath);
         blobService.getBlobToLocalFile(containerName, blobPath, downloadFilePath, err => {
             if(err) {
                 reject(err);
