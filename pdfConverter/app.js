@@ -24,7 +24,7 @@ app.get(/(blob\/)(.*?\/)(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
   blob.download(pdfPath, container)
     .then((info) => pdf.servePdfAsPng(info.path, pageNumber, req, res)
       .then((path) => setTimeout(() => fs.unlink(path,
-        () => console.log(`Deleted ${path}`)), 5000, path)) // delete file 5 secnds after its served
+        () => console.log(`Deleted ${path}`)), 20000, path)) // delete file 20 secnds after its served
       .catch(console.log))
     .catch((err) => res.send(err, 500));
 })
@@ -38,7 +38,7 @@ app.get(/(volume)(.*\.pdf)\/([0-9]+).png$/i, function (req, res) {
 
     pdf.servePdfAsPng(pdfPath, pageNumber, req, res)
       .then((path) => setTimeout(() => fs.unlink(path,
-        () => console.log(`Deleted ${path}`)), 5000, path)) // delete file 5 secnds after its served
+        () => console.log(`Deleted ${path}`)), 20000, path)) // delete file 20 secnds after its served
       .catch((err) => res.send(err, 500));
   } else {
     res.send(401);
