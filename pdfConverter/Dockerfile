@@ -11,7 +11,7 @@ RUN curl --silent --location https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install --yes nodejs
 
 # make sure there's a downloads dir
-RUN mkdir downloads
+RUN mkdir downloads && chmod -R 777 downloads
 # copy everything into workdir
 COPY . .
 

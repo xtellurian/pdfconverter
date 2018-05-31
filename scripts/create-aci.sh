@@ -48,6 +48,6 @@ az container create \
     --azure-file-volume-account-key $STORAGE_KEY \
     --azure-file-volume-share-name $SHARE_NAME \
     --azure-file-volume-mount-path /data-dir/ \
-    --environment-variables SECRET=$SECRET
+    --environment-variables SECRET=$SECRET AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING
 
 echo "Data secret is $SECRET"
