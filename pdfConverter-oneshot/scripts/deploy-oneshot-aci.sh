@@ -54,4 +54,4 @@ az container create \
     --azure-file-volume-account-key $STORAGE_KEY \
     --azure-file-volume-share-name $SHARE_NAME \
     --azure-file-volume-mount-path /$FILESHARE/ \
-    --environment-variables INPUT_DIR=$INPUT_DIR OUTPUT_DIR=$OUTPUT_DIR PROCESSED_DIR=$PROCESSED_DIR DENSITY=400 QUALITY=95
+    --environment-variables INPUT_DIR=$INPUT_DIR OUTPUT_DIR=$OUTPUT_DIR PROCESSED_DIR=$PROCESSED_DIR DENSITY=400 JPEG_EXTENT=4MB

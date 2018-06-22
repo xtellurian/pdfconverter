@@ -55,9 +55,10 @@ async function convertPdf(pdfPath, outputDir, processedDir) {
   // density ~~ quality, i.e. pixels per inch / DPI
   // -define jpeg:extent=400KB
   // http://www.imagemagick.org/script/command-line-options.php
+  //  -set "option:key" "value" 
   var pdfImage = new PDFImage(pdfPath, {
     convertOptions: {
-      "jpeg:extent": jpegMaxFileSize,
+      "-set jpeg:extent": jpegMaxFileSize,
       "-density": density
     }
   });
