@@ -11,7 +11,7 @@ var outputDir = process.env.OUTPUT_DIR;
 var processedDir = process.env.PROCESSED_DIR;
 var recurse = process.env.RECURSE;
 var density = process.env.DENSITY;
-var quality = process.env.QUALITY;
+var jpegMaxFileSize = process.env.JPEG_EXTENT;
 
 // used to make directories when they don't exist
 var makedir = true;
@@ -22,13 +22,9 @@ if(!density || !Number(density)){
 }
 density = Number(density); // make sure its a number
 
-// quality
-if(!quality || !Number(quality)){
-  quality = 95; // default to 95
+if(!jpegMaxFileSize) {
+  jpegMaxFileSize = "4MB";
 }
-quality = Number(quality); // make sure its a number
-
-
 
 async function forEachInDir(startPath, filter, asyncOperation) {
   console.log('Starting from dir ' + startPath + '/');
@@ -57,10 +53,11 @@ async function forEachInDir(startPath, filter, asyncOperation) {
 async function convertPdf(pdfPath, outputDir, processedDir) {
   // highest quality = 100
   // density ~~ quality, i.e. pixels per inch / DPI
+  // -define jpeg:extent=400KB
   // http://www.imagemagick.org/script/command-line-options.php
   var pdfImage = new PDFImage(pdfPath, {
     convertOptions: {
-      "-quality": quality,
+      "jpeg:extent": jpegMaxFileSize,
       "-density": density
     }
   });
