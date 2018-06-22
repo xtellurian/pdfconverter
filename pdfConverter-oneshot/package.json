@@ -1,0 +1,22 @@
+{
+  "name": "pdfconverter",
+  "version": "1.0.0",
+  "description": "Converts a PDF to a PNG",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pdf",
+    "png",
+    "convert"
+  ],
+  "author": "Rian Finnegan",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "mv": "^2.1.1",
+    "pdf-image": "^2.0.0"
+  },
+  "devDependencies": {}
+}
